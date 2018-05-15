@@ -7,6 +7,9 @@ using namespace std;
 int Y_Coordenate(string coord) {
     int Y;
     Y=coord[1]-'0';
+    if (Y > 8) {
+        return NULL;
+    }
     return 8-Y;
 }
 
@@ -17,6 +20,7 @@ int X_Coordenate(string coord) {
             return i;
         }
     }
+    return NULL;
 }
 
 void Print_Board(string board[8][8]) {

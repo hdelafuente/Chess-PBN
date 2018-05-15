@@ -6,10 +6,14 @@ using namespace std;
 bool Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
     int x0=X_Coordenate(Initial);
     int y0=Y_Coordenate(Initial);
-
+    if (x0==NULL || y0 ==NULL) {
+        return false;
+    }
     int x1=X_Coordenate(Final);
     int y1=Y_Coordenate(Final);
-
+    if (x1==NULL || y1==NULL) {
+        return false;
+    }
     if (x0-x1 != 0) {
         return false;
     }
@@ -30,9 +34,14 @@ bool Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
 int Validate_Move_Tower(string Initial, string Final, string board[8][8]) {
     int x0=X_Coordenate(Initial);
     int y0=Y_Coordenate(Initial);
-
+    if (x0==NULL || y0 ==NULL) {
+        return 0;
+    }
     int x1=X_Coordenate(Final);
     int y1=Y_Coordenate(Final);
+    if (x1==NULL || y1==NULL) {
+        return 0;
+    }
 
     if (x0-x1 != 0 && y0-y1 != 0) {
         return 0;
