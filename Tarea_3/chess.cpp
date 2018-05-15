@@ -287,4 +287,86 @@ int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int P
             else return 1;
         }
     }
+    if (Player == 0) {
+        if (x0 > x1 && y0 > y1) {
+            int x = x0, y = y0, temp = 0;
+            while(x > x1 && y > y1) {
+                if (board[y][x][1]=='D') {
+                    return 0;
+                }
+                else if (board[y][x][1]=='W' && temp == 0) {
+                    temp++;
+                }
+                else if (board[y][x][1]=='W' && temp > 0) {
+                    return 0;
+                }
+                x--;
+                y--;
+            }
+            if (temp == 1) {
+                return 2;
+            }
+            else return 1;
+        }
+        else if (x0 > x1 && y0 < y1) {
+            int x = x0, y = y0, temp = 0;
+            while(x > x1 && y < y1) {
+                if (board[y][x][1]=='D') {
+                    return 0;
+                }
+                else if (board[y][x][1]=='W' && temp == 0) {
+                    temp++;
+                }
+                else if (board[y][x][1]=='W' && temp > 0) {
+                    return 0;
+                }
+                x--;
+                y++;
+            }
+            if (temp == 1) {
+                return 2;
+            }
+            else return 1;
+        }
+        else if (x0 < x1 && y0 > y1) {
+            int x = x0, y = y0, temp = 0;
+            while(x < x1 && y > y1) {
+                if (board[y][x][1]=='D') {
+                    return 0;
+                }
+                else if (board[y][x][1]=='W' && temp == 0) {
+                    temp++;
+                }
+                else if (board[y][x][1]=='W' && temp > 0) {
+                    return 0;
+                }
+                x++;
+                y--;
+            }
+            if (temp == 1) {
+                return 2;
+            }
+            else return 1;
+        }
+        else if (x0 < x1 && y0 < y1) {
+            int x = x0, y = y0, temp = 0;
+            while(x < x1 && y < y1) {
+                if (board[y][x][1]=='D') {
+                    return 0;
+                }
+                else if (board[y][x][1]=='W' && temp == 0) {
+                    temp++;
+                }
+                else if (board[y][x][1]=='W' && temp > 0) {
+                    return 0;
+                }
+                x++;
+                y++;
+            }
+            if (temp == 1) {
+                return 2;
+            }
+            else return 1;
+        }
+    }
 }
