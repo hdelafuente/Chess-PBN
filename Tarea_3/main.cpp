@@ -13,10 +13,9 @@ int main(int argc, char const *argv[]) {
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
-        {"PW", "PW", "PW", "PW", "PW", "PW", "PW", "PW"},
+        {"  ", "PW", "PW", "PW", "PW", "PW", "PW", "PW"},
         {"TW", "NW", "BW", "QW", "KW", "BW", "NW", "TW"}
     };//Initial board, positions must be accessed via board[y][x]
     Print_Board(board);
-    cout << Validate_Move_Pawn("a2", "a4", board) << endl;
     return 0;
 }

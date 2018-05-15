@@ -12,7 +12,7 @@ int Y_Coordenate(string coord) {
 
 int X_Coordenate(string coord) {
     string XPos="abcdefgh";
-    for (size_t i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         if (XPos[i]==coord[0]) {
             return i;
         }
@@ -25,11 +25,11 @@ void Print_Board(string board[8][8]) {
     string YPos="12345678";//Y-position
     cout << XPos;
     cout << Line;
-    for (size_t y = 0; y < 8; y++) {
+    for (int y = 0; y < 8; y++) {
         cout << '9' - YPos[y];
         cout << " ";
         cout <<  '|';
-        for (size_t x = 0; x < 8; x++) {
+        for (int x = 0; x < 8; x++) {
             cout << ' ' + board[y][x] + " |";
         }
         cout << " " << '9' - YPos[y];
