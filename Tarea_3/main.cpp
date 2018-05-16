@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cmath>
+
 
 #include "io.h"
 #include "chess.h"
@@ -13,7 +15,7 @@ int main(int argc, char const *argv[]) {
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
-        {"PW", "PW", "PW", "PW", "PW", "PW", "PW", "PW"},
+        {"PW", "PW", "PW", "  ", "  ", "PW", "PW", "PW"},
         {"TW", "NW", "BW", "QW", "KW", "BW", "NW", "TW"}
     };//Initial board, positions must be accessed via board[y][x]
     Print_Board(board);

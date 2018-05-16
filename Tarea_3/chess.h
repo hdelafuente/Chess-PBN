@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cmath>
+
 #include "io.h"
 using namespace std;
 
@@ -21,9 +23,9 @@ using namespace std;
 bool Validate_Move_Pawn(string Initial, string Final, string board[8][8]);
 int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Player);
 int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int Player);
+int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Player);
+int Validate_Move_King(string Initial, string Final, string board[8][8], int Player);
 //bool Validate_Move_Horse(string coord);
-//bool Validate_Move_Queen(string coord);
-//int Validate_Move_King(string Initial, string Final, string board[8][8], int Player);
 
 
 

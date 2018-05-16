@@ -3,6 +3,8 @@
 
 #include <string>
 #include <sstream>
+#include <cmath>
+
 
 using namespace std;
 //Reads the input and returns an (x,y) coordenate
