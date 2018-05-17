@@ -25,7 +25,7 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
 int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int Player);
 int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Player);
 int Validate_Move_King(string Initial, string Final, string board[8][8], int Player);
-//bool Validate_Move_Horse(string coord);
+int Validate_Move_Horse(string Initial, string Final, string board[8][8], int Player);
 
 
 

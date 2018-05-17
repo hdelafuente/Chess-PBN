@@ -1,6 +1,5 @@
 final_compile: io chess main
 	g++ -o main main.o io.o chess.o
-
 main: main.cpp io.h
 	g++ -c -o main.o main.cpp
 

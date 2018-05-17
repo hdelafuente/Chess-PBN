@@ -30,6 +30,7 @@ bool Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
         return false;
     }
 }
+
 int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Player) {
     int x0 = X_Coordenate(Initial);
     int y0 = Y_Coordenate(Initial);
@@ -410,4 +411,38 @@ int Validate_Move_King(string Initial, string Final, string board[8][8], int Pla
         return Validate_Move_Tower(Initial, Final, board, Player);
     }
 
+}
+
+int Validate_Move_Horse(string Initial, string Final, string board[8][8], int Player) {
+    int x0 = X_Coordenate(Initial);
+    int y0 = Y_Coordenate(Initial);
+
+    int x1 = X_Coordenate(Final);
+    int y1 = Y_Coordenate(Final);
+    if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
+        return 0;
+    }
+    if (Player==1) {
+        int DeltaX=(x0-x1)*(x0-x1);
+        int DeltaY=(y0-y1)*(y0-y1);
+        if (DeltaX + DeltaY == 5 && board[y1][x1][1] == 'D') {
+            return 2;
+        }
+        else if (DeltaX + DeltaY == 5 && board[y1][x1][1] == 'W' ) {
+            return 0;
+        }
+        else return 1;
+    }
+    else if (Player==0) {
+        int DeltaX=(x0-x1)*(x0-x1);
+        int DeltaY=(y0-y1)*(y0-y1);
+        if (DeltaX + DeltaY == 5 && board[y1][x1][1] == 'W') {
+            return 2;
+        }
+        else if (DeltaX + DeltaY == 5 && board[y1][x1][1] == 'D' ) {
+            return 0;
+        }
+        else return 1;
+
+    }
 }
