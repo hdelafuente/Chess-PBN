@@ -13,11 +13,17 @@ int main(int argc, char const *argv[]) {
         {"PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD"},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
+        {"PW", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
         {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
-        {"  ", "  ", "  ", "  ", "  ", "  ", "  ", "  "},
-        {"PW", "PW", "PW", "PW", "PW", "PW", "PW", "PW"},
+        {"  ", "PW", "PW", "PW", "PW", "PW", "PW", "PW"},
         {"TW", "NW", "BW", "QW", "KW", "BW", "NW", "TW"}
     };//Initial board, positions must be accessed via board[y][x]
     Print_Board(board);
+    string flags[3]; //flags are stored in this array
+    for (int i = 0; i < argc; i++) {
+        flags[i]=argv[i];
+    }
+
+    cout << Validate_Move_Pawn("a4", "a5", board) << endl;
     return 0;
 }

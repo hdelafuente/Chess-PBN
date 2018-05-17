@@ -4,31 +4,45 @@
 #include <cmath>
 #include "io.h"
 using namespace std;
-bool Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
+int Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
     int x0 = X_Coordenate(Initial);
     int y0 = Y_Coordenate(Initial);
 
     int x1 = X_Coordenate(Final);
     int y1 = Y_Coordenate(Final);
     if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
-        return false;
+        return 0;
     }
-    if (abs(x0-x1) != 0) {
-        return false;
+    if (abs(x0-x1) != 0 && abs(y0-y1) == 0) {
+        return 0;
     }
 
     else if (IsWhite(board, x0, y0)) {
-        if (y0-y1 > 0 && y0-y1 < 2 && (board[y1][x1][1] != 'W' || 'D')) {
-            return true;
+        if (y0 > y1 && abs(y0-y1) < 2 && (board[y1][x1][1] != 'W' || 'D') && y0 != 6) {
+            return 1;
         }
-        return false;
+        else if (abs(x0-x1)==1 && abs(y0-y1) == 1 && board[y1][x1][1] == 'D') {
+            return 2;
+        }
+        else if (y0 > y1 && abs(y0-y1) == 2 && (board[y1][x1][1] != 'W' || 'D') && y0 == 6) {
+            return 1;
+        }
+        return 0;
     }
+
     else if (!IsWhite(board, x0, y0)) {
-        if (y1-y0 > 0 && y1-y0 < 2 && (board[y1][x1][1] != 'W' || 'D')) {
-            return true;
+        if (y1 > y0 && abs(y1-y0) < 2 && (board[y1][x1][1] != 'W' || 'D') && y0 != 1) {
+            return 1;
         }
-        return false;
+        else if (abs(x0-x1)==1 && abs(y0-y1) == 1 && board[y1][x1][1] == 'W') {
+            return 2;
+        }
+        else if (y0 < y1 && abs(y0-y1) == 2 && (board[y1][x1][1] != 'W' || 'D') && y0 == 1) {
+            return 1;
+        }
+        return 0;
     }
+    return 0;
 }
 
 int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Player) {
@@ -193,6 +207,7 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
             else return 1;
         }
     }
+    return 0;
 }
 
 int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int Player) {
@@ -372,6 +387,7 @@ int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int P
             else return 1;
         }
     }
+    return 0;
 }
 
 int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Player) {
@@ -389,6 +405,7 @@ int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Pl
     else if ((abs(x0-x1) == 0 && abs(y0-y1) == 1) || (abs(x0-x1) == 1 && abs(y0-y1) == 0)) { //Straigh moves
         return Validate_Move_Tower(Initial, Final, board, Player);
     }
+    return 0;
 }
 
 int Validate_Move_King(string Initial, string Final, string board[8][8], int Player) {
@@ -410,6 +427,7 @@ int Validate_Move_King(string Initial, string Final, string board[8][8], int Pla
     else if ((abs(x0-x1) == 0 && abs(y0-y1) == 1) || (abs(x0-x1) == 1 && abs(y0-y1) == 0)) { //Straigh moves
         return Validate_Move_Tower(Initial, Final, board, Player);
     }
+    return 0;
 
 }
 
@@ -445,4 +463,5 @@ int Validate_Move_Horse(string Initial, string Final, string board[8][8], int Pl
         else return 1;
 
     }
+    return 0;
 }

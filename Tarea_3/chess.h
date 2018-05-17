@@ -20,7 +20,7 @@ using namespace std;
     Player == 1 -> White
     Player == 0 -> Dark
 */
-bool Validate_Move_Pawn(string Initial, string Final, string board[8][8]);
+int Validate_Move_Pawn(string Initial, string Final, string board[8][8]);
 int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Player);
 int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int Player);
 int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Player);

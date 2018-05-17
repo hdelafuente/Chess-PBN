@@ -51,3 +51,23 @@ bool IsWhite(string board[8][8], int X, int Y) {
     }
     return false;
 }
+
+int flag(string b[3]) {
+	int j=1;
+	for (j=1;j<3;j++) {
+        if (b[j] == "-t") {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+string File_Name(string b[3]) {
+	int j=1;
+	for (j=1;j<3;j++) {
+        if (b[j] == "-t") {
+            return b[j+1];
+        }
+    }
+    return " ";
+}
