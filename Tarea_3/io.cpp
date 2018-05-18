@@ -3,7 +3,8 @@
 #include <sstream>
 #include <cmath>
 
-
+#include "chess.h"
+#include "player.h"
 using namespace std;
 
 int Y_Coordenate(string coord) {
@@ -42,7 +43,7 @@ void Print_Board(string board[8][8]) {
         cout << endl;
         cout << Line;
     }
-    cout << " " <<XPos;
+    cout << " " << XPos;
 }
 
 bool IsWhite(string board[8][8], int X, int Y) {
@@ -51,6 +52,27 @@ bool IsWhite(string board[8][8], int X, int Y) {
     }
     return false;
 }
+
+int Read_Move(string Initial, string Final, string board[8][8], int ID){
+    int x0 = X_Coordenate(Initial);
+    int y0 = Y_Coordenate(Initial);
+    int number;
+    if (board[y0][x0][0] == 'P')
+        number = Validate_Move_Pawn(Initial, Final, board);
+    else if (board[y0][x0][0] == 'T')
+        number = Validate_Move_Tower(Initial, Final, board, ID);
+    else if (board[y0][x0][0] == 'N')
+        number = Validate_Move_Horse(Initial, Final, board, ID);
+    else if (board[y0][x0][0] == 'B')
+        number = Validate_Move_Bishop(Initial, Final, board, ID);
+    else if (board[y0][x0][0] == 'Q')
+        number = Validate_Move_Queen(Initial, Final, board, ID);
+    else if (board[y0][x0][0] == 'K')
+        number = Validate_Move_King(Initial, Final, board, ID);
+
+    return number;
+}
+
 
 int flag(string b[3]) {
 	int j=1;
@@ -69,5 +91,38 @@ string File_Name(string b[3]) {
             return b[j+1];
         }
     }
-    return " ";
+    return NULL;
+}
+
+void Move(string Initial, string Final,string board[8][8]) {
+    int x0 = X_Coordenate(Initial);
+    int y0 = Y_Coordenate(Initial);
+
+    int x1 = X_Coordenate(Final);
+    int y1 = Y_Coordenate(Final);
+    board[y1][x1] = board[y0][x0];
+    board[y0][x0] = "  ";
+
+}
+
+int Winner(string board[8][8]) {
+    int sumWhite = 0;
+    int sumDark = 0;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if(board[i][j] == "KD"){
+                sumDark++;
+            }
+            else if (board[i][j] == "KW") {
+                sumWhite++;
+            }
+        }
+    }
+    if (sumWhite == 0) {
+        return 0;
+    }
+    else if (sumDark == 0) {
+        return 1;
+    }
+    return 2;
 }
