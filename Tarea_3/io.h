@@ -30,4 +30,7 @@ string File_Name(string b[3]);
 void Move(string Initial, string Final, string board[8][8]);
 
 int Winner(string board[8][8]);
+
+string splitX(string Move);
+string splitY(string Move);
 #endif

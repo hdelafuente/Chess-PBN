@@ -51,7 +51,13 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
 
     int x1 = X_Coordenate(Final);
     int y1 = Y_Coordenate(Final);
-    if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
+
+    int DeltaX = x0 - x1;
+    int DeltaY = y0 - y1;
+    if (DeltaX == 0 || DeltaY == 0) {
+        return 0;
+    }
+    else if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
         return 0;
     }
     if (abs(x0-x1) != 0 && abs(y0-y1) != 0) {
@@ -305,7 +311,7 @@ int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int P
             else return 1;
         }
     }
-    if (Player == 0 && !IsWhite(board, x0, y0)) {
+    else if (Player == 0 && !IsWhite(board, x0, y0)) {
         if (x0 > x1 && y0 > y1) {
             int x = x0-1, y = y0-1, temp = 0;
             while(x > x1 && y > y1) {
@@ -396,16 +402,27 @@ int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Pl
 
     int x1 = X_Coordenate(Final);
     int y1 = Y_Coordenate(Final);
-    if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
+
+    int DeltaX = x0 - x1;
+    int DeltaY = y0 - y1;
+    if (DeltaX == 0 || DeltaY == 0) {
         return 0;
     }
-    if (abs(x0-x1) != 0 && abs(y0-y1) != 0) { //Diagonal moves
-        int num = Validate_Move_Bishop(Initial, Final, board, Player);
-        return num;
+
+    else if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
+        return 0;
     }
-    else if ((abs(x0-x1) == 0 && abs(y0-y1) >= 1) || (abs(x0-x1) >= 1 && abs(y0-y1) == 0)) { //Straigh moves
-        int num = Validate_Move_Tower(Initial, Final, board, Player);
-        return num;
+    else if(Player == 1 && IsWhite(board, x0, y0) && board[y1][x1][1] != 'W'){
+        if (abs(DeltaX) == 0 && abs(DeltaY) > 0) return 1;
+        else if (abs(DeltaX) > 0 && abs(DeltaY) == 0) return 1;
+        else if (abs(DeltaX) == abs(DeltaY)) return 1;
+        else return 0;
+    }
+    else if(Player == 0 && !IsWhite(board, x0, y0) && board[y1][x1][1] != 'D'){
+        if (abs(DeltaX) == 0 && abs(DeltaY) > 0) return 1;
+        else if (abs(DeltaX) > 0 && abs(DeltaY) == 0) return 1;
+        else if (abs(DeltaX) == abs(DeltaY)) return 1;
+        else return 0;
     }
     return 0;
 }
@@ -416,23 +433,23 @@ int Validate_Move_King(string Initial, string Final, string board[8][8], int Pla
 
     int x1 = X_Coordenate(Final);
     int y1 = Y_Coordenate(Final);
+
+    int DeltaX = x0 - x1;
+    int DeltaY = y0 - y1;
     if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
         return 0;
     }
-    else if (abs(x0-x1)>1 || abs(y0-y1)>1) {
+    else if (abs(DeltaX)>1 || abs(DeltaY)>1) {
         return 0;
     } //Verify that king is only moving 1 square
 
-    if (abs(x0-x1) == 1 && abs(y0-y1) == 1) { //Diagonal moves
-        int num = Validate_Move_Bishop(Initial, Final, board, Player);
-        return num;
+    if(Player == 1 && IsWhite(board, x0, y0) && board[y1][x1][1] != 'W'){
+        return 1;
     }
-    else if ((abs(x0-x1) == 0 && abs(y0-y1) == 1) || (abs(x0-x1) == 1 && abs(y0-y1) == 0)) { //Straigh moves
-        int num = Validate_Move_Tower(Initial, Final, board, Player);
-        return num;
+    else if(Player == 0 && !IsWhite(board, x0, y0) && board[y1][x1][1] != 'D'){
+        return 1;
     }
     return 0;
-
 }
 
 int Validate_Move_Horse(string Initial, string Final, string board[8][8], int Player) {

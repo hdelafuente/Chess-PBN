@@ -94,7 +94,7 @@ string File_Name(string b[3]) {
     return NULL;
 }
 
-void Move(string Initial, string Final,string board[8][8]) {
+void Move(string Initial, string Final, string board[8][8]) {
     int x0 = X_Coordenate(Initial);
     int y0 = Y_Coordenate(Initial);
 
@@ -125,4 +125,20 @@ int Winner(string board[8][8]) {
         return 1;
     }
     return 2;
+}
+
+string splitX(string Move) {
+    string Initial;
+    for (int i = 0; i < 2; i++) {
+        Initial+=Move[i];
+    }
+    return Initial;
+}
+
+string splitY(string Move) {
+    string Final;
+    for (int i = 3; i < 5; i++) {
+        Final+=Move[i];
+    }
+    return Final;
 }
