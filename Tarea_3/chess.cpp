@@ -4,7 +4,7 @@
 #include <cmath>
 #include "io.h"
 using namespace std;
-int Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
+int Validate_Move_Pawn(string Initial, string Final, string board[8][8], int Player) {
     int x0 = X_Coordenate(Initial);
     int y0 = Y_Coordenate(Initial);
 
@@ -17,7 +17,7 @@ int Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
         return 0;
     }
 
-    else if (IsWhite(board, x0, y0)) {
+    else if (IsWhite(board, x0, y0) && Player == 1) {
         if (y0 > y1 && abs(y0-y1) == 1 && (board[y1][x1][1] != 'W' || 'D')) {
             return 1;
         }
@@ -30,7 +30,7 @@ int Validate_Move_Pawn(string Initial, string Final, string board[8][8]) {
         return 0;
     }
 
-    else if (!IsWhite(board, x0, y0)) {
+    else if (!IsWhite(board, x0, y0) && Player == 0) {
         if (y1 > y0 && abs(y1-y0) == 1 && (board[y1][x1][1] != 'W' || 'D')) {
             return 1;
         }
@@ -54,18 +54,18 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
 
     int DeltaX = x0 - x1;
     int DeltaY = y0 - y1;
-    if (DeltaX == 0 || DeltaY == 0) {
+    if (DeltaX == 0 && DeltaY == 0) {
         return 0;
     }
     else if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
         return 0;
     }
-    if (abs(x0-x1) != 0 && abs(y0-y1) != 0) {
+    else if (abs(x0-x1) != 0 && abs(y0-y1) != 0) {
         return 0;
     }
 
     else if (Player == 1 && IsWhite(board, x0, y0)) { //white Player
-        if (y0 > y1 && abs(x0-x1) == 0) {
+        if (DeltaY>0 && abs(DeltaX) == 0) {
             int temp = 0;
             for (int y = y1; y < y0; y++) {
                 if (board[y][x0][1] == 'W') {
@@ -121,7 +121,7 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
         }
         else if (x1 > x0 && abs(y0-y1) == 0) {
             int temp = 0;
-            for (int x = x0; x < x1; x++) {
+            for (int x = x1; x > x0; x--) {
                 if (board[y0][x][1] == 'W') {
                     return 0;
                 }
@@ -140,7 +140,7 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
     }
 
     else if (Player == 0 && !IsWhite(board, x0, y0)) { //Dark Players
-        if (y0 > y1 && abs(x0-x1) == 0) {
+        if (DeltaY>0 && abs(DeltaX) == 0) {
             int temp = 0;
             for (int y = y1; y < y0; y++) {
                 if (board[y][x0][1] == 'D') {
@@ -196,7 +196,7 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
         }
         else if (x1 > x0 && abs(y0-y1) == 0) {
             int temp = 0;
-            for (int x = x0; x < x1; x++) {
+            for (int x = x1; x > x0; x--) {
                 if (board[y0][x][1] == 'D') {
                     return 0;
                 }
@@ -219,7 +219,6 @@ int Validate_Move_Tower(string Initial, string Final, string board[8][8], int Pl
 int Validate_Move_Bishop(string Initial, string Final, string board[8][8], int Player) {
     int x0 = X_Coordenate(Initial);
     int y0 = Y_Coordenate(Initial);
-
     int x1 = X_Coordenate(Final);
     int y1 = Y_Coordenate(Final);
     if (x1 == -1 || y1 == -1 || x0 == -1 || y0 == -1) {
@@ -405,7 +404,7 @@ int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Pl
 
     int DeltaX = x0 - x1;
     int DeltaY = y0 - y1;
-    if (DeltaX == 0 || DeltaY == 0) {
+    if (DeltaX == 0 && DeltaY == 0) {
         return 0;
     }
 
@@ -413,17 +412,18 @@ int Validate_Move_Queen(string Initial, string Final, string board[8][8], int Pl
         return 0;
     }
     else if(Player == 1 && IsWhite(board, x0, y0) && board[y1][x1][1] != 'W'){
-        if (abs(DeltaX) == 0 && abs(DeltaY) > 0) return 1;
-        else if (abs(DeltaX) > 0 && abs(DeltaY) == 0) return 1;
-        else if (abs(DeltaX) == abs(DeltaY)) return 1;
+        if (abs(DeltaX) == 0 && abs(DeltaY) > 0) return Validate_Move_Tower(Initial, Final, board, Player);
+        else if (abs(DeltaX) > 0 && abs(DeltaY) == 0) return Validate_Move_Tower(Initial, Final, board, Player);
+        else if (abs(DeltaX) == abs(DeltaY)) return Validate_Move_Bishop(Initial, Final, board, Player);
         else return 0;
     }
     else if(Player == 0 && !IsWhite(board, x0, y0) && board[y1][x1][1] != 'D'){
-        if (abs(DeltaX) == 0 && abs(DeltaY) > 0) return 1;
-        else if (abs(DeltaX) > 0 && abs(DeltaY) == 0) return 1;
-        else if (abs(DeltaX) == abs(DeltaY)) return 1;
+        if (abs(DeltaX) == 0 && abs(DeltaY) > 0) return Validate_Move_Tower(Initial, Final, board, Player);
+        else if (abs(DeltaX) > 0 && abs(DeltaY) == 0) return Validate_Move_Tower(Initial, Final, board, Player);
+        else if (abs(DeltaX) == abs(DeltaY)) return Validate_Move_Bishop(Initial, Final, board, Player);
         else return 0;
     }
+    cout<<"aca"<<endl;
     return 0;
 }
 

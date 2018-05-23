@@ -10,7 +10,7 @@ using namespace std;
 int Y_Coordenate(string coord) {
     int Y;
     Y=coord[1]-'0';
-    if (Y > 7 || Y < 0) {
+    if (Y > 8 || Y < 0) {
         return -1;
     }
     return 8-Y;
@@ -58,7 +58,7 @@ int Read_Move(string Initial, string Final, string board[8][8], int ID){
     int y0 = Y_Coordenate(Initial);
     int number;
     if (board[y0][x0][0] == 'P')
-        number = Validate_Move_Pawn(Initial, Final, board);
+        number = Validate_Move_Pawn(Initial, Final, board, ID);
     else if (board[y0][x0][0] == 'T')
         number = Validate_Move_Tower(Initial, Final, board, ID);
     else if (board[y0][x0][0] == 'N')

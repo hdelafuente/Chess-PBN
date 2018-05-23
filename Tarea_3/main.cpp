@@ -4,23 +4,13 @@
 #include <cmath>
 #include <vector>
 #include <cstdlib>
+#include <fstream>
 
 #include "io.h"
 #include "chess.h"
 #include "player.h"
 using namespace std;
-void split(string Line, string Initial, string Final) {
-    vector<string> list;
-    size_t found;
-    found = Line.find(" ");
-    list.push_back(Line.substr(0,found));
-    list.push_back(Line.substr(found+1, Line.size()));
-    Initial = list[0];
-    Final = list[1];
-}
 
-
-//int argc, char const *argv[]
 int main(int argc, char const *argv[]) {
     string board[8][8]={
         {"TD", "ND", "BD", "QD", "KD", "BD", "ND", "TD"},
@@ -47,6 +37,7 @@ int main(int argc, char const *argv[]) {
     
     if (t_flag == 0) {
         while(White.GetKingStatus() == 1 && Dark.GetKingStatus() == 1) {
+        	Console:
             int win = Winner(board);
             Print_Board(board);
             if (win == 0) {
@@ -57,6 +48,7 @@ int main(int argc, char const *argv[]) {
             else if (win == 1) {
                 cout << "White player Wins" << endl;
                 Dark.ChangeKingStatus();
+                continue;
             }
 
             if (Actual_Player == 1) {
@@ -99,7 +91,65 @@ int main(int argc, char const *argv[]) {
     }
     else if (t_flag == 1) {
         string file_name = File_Name(flags);
-        cout << file_name << endl;
+	ifstream Input;
+	Input.open(file_name);
+	if(!Input) {
+		cout << "File not found" << endl;
+		return 0;
+	}
+	string Line;
+	while (getline(Input, Line)){
+		while(White.GetKingStatus() == 1 && Dark.GetKingStatus() == 1) {
+		    int win = Winner(board);
+		    Print_Board(board);
+		    if (win == 0) {
+		        cout << "Dark player Wins" << endl;
+		        White.ChangeKingStatus();
+		        continue;
+		    }
+		    else if (win == 1) {
+		        cout << "White player Wins" << endl;
+		        Dark.ChangeKingStatus();
+		        continue;
+		    }
+
+		    if (Actual_Player == 1) {
+		        string Initial = splitX(Line);
+		        string Final = splitY(Line);
+		        int move = Read_Move(Initial, Final, board, Actual_Player);
+		        if(move == 0) {
+		            cout << "Invalid move" << endl;
+		            t_flag--;
+		            goto Console;
+		        }
+		        else {
+		            Move(Initial, Final, board);
+		            Actual_Player--;
+		            break;
+		        }
+		    }
+		    else if (Actual_Player == 0) {
+		        string Initial = splitX(Line);
+		        string Final = splitY(Line);
+		        int move = Read_Move(Initial, Final, board, Actual_Player);
+		        if(move == 0) {
+		            cout << "Invalid move" << endl;
+		            t_flag--;
+		            goto Console;
+		        }
+		        else {
+		            Move(Initial, Final, board);
+		            Actual_Player++;
+		            break;
+		        }
+		    }
+		}
+	}
+	if (White.GetKingStatus() == 1 && Dark.GetKingStatus() == 1) {
+		goto Console;
+	}
+	Input.close();
+        
     }
 
     return 0;

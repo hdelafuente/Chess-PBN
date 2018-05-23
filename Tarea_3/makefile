@@ -1,5 +1,5 @@
 final_compile: io chess player main
-	g++ -o main main.o io.o chess.o player.o -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self
+	g++ -o tarea_3 main.o io.o chess.o player.o -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self
 main: main.cpp io.h
 	g++ -c -o main.o main.cpp -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self
 
@@ -14,5 +14,5 @@ player: player.cpp player.h
 
 clean:
 	rm *.o
-	rm main
+	rm tarea_3
 	clear
